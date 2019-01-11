@@ -2,24 +2,7 @@
  Copyright (c) 2017-2018 Xiamen Yaji Software Co., Ltd.
  
  http://www.cocos2d-x.org
- 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
- 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
- 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
+
  ****************************************************************************/
 
 #include "HelloWorldScene.h"
@@ -51,7 +34,8 @@ bool HelloWorld::init()
 
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
-
+	
+	
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
@@ -80,19 +64,37 @@ bool HelloWorld::init()
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
 
-    /////////////////////////////
     // 3. add your codes below...
 
     // add "HelloWorld" splash screen"
+	auto background = Sprite::create("background2.png");
+	background->setPosition(visibleSize.width /2, visibleSize.height / 2);
+	background->setContentSize(visibleSize);
+	addChild(background);
+	// acstion run right
+	auto ruright = MoveBy::create(4, Vec2(visibleSize.width /2 -50, 0));
+	/*auto soldier = Sprite::create("image.png");
+	soldier->setPosition(Vec2(visibleSize.width /2, visibleSize.height - 50));
+	soldier->setScale(0.2);
+	addChild(soldier);
+
+	auto hulkR = Sprite::create("hulkR.png");
+	hulkR->setPosition(Vec2(visibleSize.width /2 + 200, visibleSize.height - 50));
+	hulkR->setScale(0.2);
+	addChild(hulkR);*/
+
+   // Sprit king
     auto sprite = Sprite::create("Kingvalue.png");
+     sprite->runAction(ruright);
     if (sprite == nullptr)
     {
-        problemLoading("'Kingvalue.png'");
+		problemLoading("'Kingvalue.png'");
     }
     else
     {
         // position the sprite on the center of the screen
-        sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+        sprite->setPosition(Vec2(50, 50));
+		sprite->setScale(0.2);
 
         // add the sprite as a child to this layer
         this->addChild(sprite, 0);
@@ -110,10 +112,6 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     exit(0);
 #endif
 
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
-
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
 }
