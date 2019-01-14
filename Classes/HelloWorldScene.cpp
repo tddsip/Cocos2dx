@@ -6,7 +6,9 @@
  ****************************************************************************/
 
 #include "HelloWorldScene.h"
+#include "Play.h"
 #include "SimpleAudioEngine.h"
+#include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
@@ -25,8 +27,7 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
+ 
     if ( !Scene::init() )
     {
         return false;
@@ -35,12 +36,11 @@ bool HelloWorld::init()
     auto visibleSize = Director::getInstance()->getVisibleSize();
     Vec2 origin = Director::getInstance()->getVisibleOrigin();
 	
-	
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
-
-    // add a "close" icon to exit the progress. it's an autorelease object
+	// play
+	auto playItem = MenuItemFont::create("Play",
+		CC_CALLBACK_1(HelloWorld::menuPlayCallback, this));
+	playItem->setPosition(visibleSize.width / 2, visibleSize.height / 2 -50);
+	// close
     auto closeItem = MenuItemImage::create(
                                            "CloseNormal.png",
                                            "CloseSelected.png",
@@ -58,48 +58,45 @@ bool HelloWorld::init()
         float y = origin.y + closeItem->getContentSize().height/2;
         closeItem->setPosition(Vec2(x,y));
     }
-
+	
     // create menu, it's an autorelease object
-    auto menu = Menu::create(closeItem, NULL);
+    auto menu = Menu::create(playItem,closeItem, NULL);
     menu->setPosition(Vec2::ZERO);
     this->addChild(menu, 1);
 
-    // 3. add your codes below...
-
-    // add "HelloWorld" splash screen"
+	// backroug
 	auto background = Sprite::create("background2.png");
 	background->setPosition(visibleSize.width /2, visibleSize.height / 2);
 	background->setContentSize(visibleSize);
 	addChild(background);
-	// acstion run right
-	auto ruright = MoveBy::create(4, Vec2(visibleSize.width /2 -50, 0));
-	/*auto soldier = Sprite::create("image.png");
-	soldier->setPosition(Vec2(visibleSize.width /2, visibleSize.height - 50));
-	soldier->setScale(0.2);
-	addChild(soldier);
+	// label 
+	auto label = Label::createWithTTF("What do you mean ?", "fonts/Marker Felt.ttf", 18);
+	label->setPosition(visibleSize.width / 2, visibleSize.height / 2 + 100);
+	addChild(label);
 
-	auto hulkR = Sprite::create("hulkR.png");
-	hulkR->setPosition(Vec2(visibleSize.width /2 + 200, visibleSize.height - 50));
-	hulkR->setScale(0.2);
-	addChild(hulkR);*/
+	// action run 
+	auto ruright = MoveBy::create(0.3, Vec2(20, 0));
+	auto runup = MoveBy::create(0.5, Vec2(0, 30));
+	auto rundown = MoveBy::create(0.5, Vec2(0, -30));
+	
 
    // Sprit king
     auto sprite = Sprite::create("Kingvalue.png");
-     sprite->runAction(ruright);
+	auto sequence = Sequence::create(ruright, runup, rundown, nullptr);
+	sprite->runAction(RepeatForever::create(sequence));
+
     if (sprite == nullptr)
     {
 		problemLoading("'Kingvalue.png'");
     }
     else
     {
-        // position the sprite on the center of the screen
         sprite->setPosition(Vec2(50, 50));
 		sprite->setScale(0.2);
-
-        // add the sprite as a child to this layer
         this->addChild(sprite, 0);
     }
     return true;
+	
 }
 
 
@@ -112,6 +109,12 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
     exit(0);
 #endif
 
-
-
+}
+void HelloWorld::menuPlayCallback(Ref* pSender)
+{
+	auto gotoNext = CallFunc::create([]() {
+		Director::getInstance()->replaceScene(Play::createScene());
+	});
+	auto sequence = Sequence::create( gotoNext, nullptr);
+	runAction(sequence);
 }
