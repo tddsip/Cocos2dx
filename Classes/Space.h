@@ -11,12 +11,13 @@ class Space
 public:
 	Space();
 	virtual ~Space();
-	void setPos(int X, int Y);
+	void setPos(float X, float Y);
 	Sprite* getSprite();
 	void setSprite(Sprite * sprite);
+	void setIsAlive(bool mIsAlive);
+	bool getIsAlive();
 private:
-	Sprite * mSprite;  
-	int mPosX, mPosY;
+	Sprite * mSprite;
+	bool mIsAlive;
 };
-
 #endif // __Space_H__

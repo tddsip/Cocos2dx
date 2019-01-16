@@ -10,6 +10,8 @@ public:
     static cocos2d::Scene* createScene();
 
     virtual bool init();
+
+	virtual void update(float td);
     
     CREATE_FUNC(Play);
 };

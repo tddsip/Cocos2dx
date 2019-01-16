@@ -13,11 +13,9 @@ Space::~Space()
 {
 }
 
-void Space::setPos(int X, int Y)
+void Space::setPos(float X, float Y)
 {
-	this->mPosX = X;
-	this->mPosY = Y;
-	this->mSprite->setPosition(Vec2(mPosX, mPosY));
+	this->mSprite->setPosition(X, Y);
 }
 
 Sprite * Space::getSprite()
@@ -28,4 +26,14 @@ Sprite * Space::getSprite()
 void Space::setSprite(Sprite * sprite)
 {
 	this->mSprite = sprite;
+}
+
+void Space::setIsAlive(bool mIsAlive)
+{
+	this->mIsAlive = mIsAlive;
+}
+
+bool Space::getIsAlive()
+{
+	return mIsAlive;
 }
