@@ -1,17 +1,23 @@
 
-#ifndef __Spaceship_H__
-#define __Spaceship_H__
+#ifndef __SpaceShip_H__
+#define __SpaceShip_H__
 
 #include "cocos2d.h"
+#include "space.h"
+using namespace std;
+using namespace cocos2d;
 
-class SpaceShip : public cocos2d::Scene
+class SpaceShip : public Space
 {
 public:
-    static cocos2d::Scene* createScene();
-
-    virtual bool init();
-    
-    CREATE_FUNC(SpaceShip);
+	SpaceShip(Scene*);
+	~SpaceShip();
+	void createEvent(Scene*);
+	bool onTouchBegan(Touch* touch, Event *event);
+	void onTouchMoved(Touch* touch, Event *event);
+	void onTouchEnded(Touch* touch, Event *event);
+private:
+	Size visibleSize;
 };
 
-#endif // __Spaceship_H__
+#endif // __SpaceShip_H__

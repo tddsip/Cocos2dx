@@ -16,7 +16,7 @@ public:
 	void setSprite(Sprite * sprite);
 	void setIsAlive(bool mIsAlive);
 	bool getIsAlive();
-private:
+protected:
 	Sprite * mSprite;
 	bool mIsAlive;
 };

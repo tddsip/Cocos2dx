@@ -1,6 +1,6 @@
 
-#ifndef __Rock_H__
-#define __Rock_H__
+#ifndef __ROCK_H__
+#define __ROCK_H__
 
 #include "cocos2d.h"
 #include "Space.h"
@@ -15,4 +15,4 @@ public:
 	void run();
 };
 
-#endif // __Spaceship_H__
+#endif // __ROCK_H__
